@@ -1,0 +1,35 @@
+<md-content class="first-content" style="height: 600px;padding: 24px;">
+
+  <div layout="row" layout-align="center center">
+      <h3 style="font-size:2em;color:#666;">Sign In</h3>
+  </div>
+
+  <div layout="row" layout-align="center center">
+    <md-card style="width:50%;">
+      <md-card-content>
+         <form name="userForm">
+               <md-input-container>
+                 <label>Email</label>
+                 <input md-maxlength="30" required name="description" ng-model="user.email">
+                 <div ng-messages="userForm.email.$error">
+                   <div ng-message="required">This is required.</div>
+                 </div>
+               </md-input-container>
+               <md-input-container>
+                 <label>Password</label>
+                 <input md-maxlength="30"  type="password" required name="clientName" ng-model="user.password">
+                 <div ng-messages="userForm.password.$error">
+                   <div ng-message="required">This is required.</div>
+                 </div>
+               </md-input-container>
+               <md-input-container layout-align="center center">
+               <md-button class="md-raised md-primary signinBtn" ng-click="signIn()"> Sign In </md-button>
+               <span>Don't have an account? <a href="/sign_in">Sign Up</a></span>
+               </md-input-container>
+          </form>
+      </md-card-content>
+    </md-card>
+ </div>
+
+
+</md-content>

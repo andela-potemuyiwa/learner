@@ -1,0 +1,24 @@
+<div class="jumbotron text-center">
+    <h1>These are your courses</h1>
+
+    <p>{{ tagline }}</p>
+
+    <table class="table table-striped">
+      <th>Courses</th>
+      <th>Course Description</th>
+      <th>Course Flag</th>
+      <th>Video</th>
+      <th>Duration</th>
+      <th>Instructor</th>
+      <tr class="success" ng-repeat="course in courses ">
+          <td>{{ course.name }}</td>
+          <td>{{ course.description }}</td>
+          <td><img ng-src="{{ course.course_avatar }}" /></td>
+
+          <td ng-bind-html="course.course_video_url"></td>
+          <td>{{ course.course_duration }}</td>
+          <td>{{ course.course_instructor_handle }}</td>
+
+      </tr>
+    </table>
+</div>
