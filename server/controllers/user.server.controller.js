@@ -65,8 +65,6 @@ module.exports = {
                     message: 'User ' + request.body.username + ' was added to the list of users.',
                 });
 
-
-
                 next();
             });
         },
