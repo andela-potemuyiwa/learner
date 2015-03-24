@@ -1,12 +1,12 @@
 <md-content class="first-content" style="height: 600px;padding: 24px;">
 
-  <div layout="row" layout-align="center center">
+  <div layout="row" layout-align="center center" ng-hide="isAuthenticated()">
       <h3 style="font-size:2em;color:#666;">Sign In</h3>
   </div>
 
   <div layout="row" layout-align="center center">
     <md-card style="width:50%;">
-      <md-card-content>
+      <md-card-content ng-hide="identity.isAuthenticated()">
          <form name="userForm">
                <md-input-container>
                  <label>Email</label>
@@ -24,9 +24,9 @@
                </md-input-container>
                <md-input-container layout-align="center center">
                <md-button class="md-raised md-primary signinBtn" ng-click="signIn()"> Sign In </md-button>
-               <span>Don't have an account? <a href="/sign_in">Sign Up</a></span>
+               <span>Don't have an account? <a href="/sign_up">Sign Up</a></span>
                </md-input-container>
-          </form>
+        </form>
       </md-card-content>
     </md-card>
  </div>

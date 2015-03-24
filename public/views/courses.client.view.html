@@ -1,24 +1,29 @@
-<div class="jumbotron text-center">
-    <h1>These are your courses</h1>
+<md-content class="first-content" style="padding: 24px;">
+  <div layout="row" layout-align="center center" class="skill_caption">
+      <h3>
+        Build Your Skills, Become Better, Learn These Web technologies!
+      </h3>
+  </div>
 
-    <p>{{ tagline }}</p>
+  <div layout="row" layout-align="center center" class="browse_caption">
+      <span>Browse Lessons By Technogy</span>
+  </div>
 
-    <table class="table table-striped">
-      <th>Courses</th>
-      <th>Course Description</th>
-      <th>Course Flag</th>
-      <th>Video</th>
-      <th>Duration</th>
-      <th>Instructor</th>
-      <tr class="success" ng-repeat="course in courses ">
-          <td>{{ course.name }}</td>
-          <td>{{ course.description }}</td>
-          <td><img ng-src="{{ course.course_avatar }}" /></td>
+  <div layout="row">
+      <md-content  style="border:0px solid black;">
+        <div align="center">
+          <div ng-repeat="tech in technologies" class="techCards">
+              <md-card>
+                  <md-card-content>
+                    <a ng-href="/technologies/{{ tech.technology_slug }}">
+                      <img ng-src="{{ tech.technology_avatar }}" width="200" height="200" />
+                    </a>
+                  </md-card-content>
+                <span class="techName"> {{ tech.name }}</span>
+              </md-card>
+          </div>
+        </div>
+      </md-content>
+  </div>
 
-          <td ng-bind-html="course.course_video_url"></td>
-          <td>{{ course.course_duration }}</td>
-          <td>{{ course.course_instructor_handle }}</td>
-
-      </tr>
-    </table>
-</div>
+</md-content>

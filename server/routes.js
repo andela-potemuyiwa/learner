@@ -1,33 +1,31 @@
-var User = require('./controllers/user.server.controller');
-var Course = require('./models/course.model');
+var User       = require('./controllers/user.server.controller');
+var Course     = require('./controllers/course.server.controller');
+var Tech       = require('./controllers/technology.server.controller');
+var Instructor = require('./controllers/instructor.server.controller');
+var passport   = require('passport');
 
-    module.exports = function(app) {
+module.exports = function(app) {
 
-        app.get('/api/users', User.listUsers);
+        app.get('/api/users',   User.listUsers);
+        app.post('/api/users',  User.addUser );
+        app.get('/api/users/:id', User.getUser);
 
-        app.post('/api/users', User.addUser );
+        app.post('/login', User.authUser );
+        app.post('/logout', User.logOutUser );
 
-        app.get('/api/users/:id', function( req,res){
+        app.get('/api/courses',  Course.listCourses );
+        app.get('/api/courses/:course_slug',  Course.getCourse );
+        app.post('/api/courses', Course.addCourse );
 
-            var param = req.params.id;
+        app.get('/api/technologies',  Tech.listTechnologies );
+        app.get('/api/technologies/:tech_slug', Tech.getTechnology );
+        app.get('/api/technologies/:tech_slug/courses', Tech.getCoursesUnderTechnology );
+        app.post('/api/technologies', Tech.addTechnology );
 
-            res.json({ "id" : param });
-        });
+        app.get('/api/instructors/', Instructor.listInstructors );
+        app.get('/api/instructors/:id', Instructor. getInstructorById );
+        app.get('/api/instructors/:twitter_handle', Instructor.getEachInstructor );
+        app.get('/api/instructors/:twitter_handle/courses', Instructor.getEachInstructorCourses );
 
-        app.get('/api/courses', function( req, res){
-            // use mongoose to get all users in the database
-            Course.find(function(err, courses) {
-
-                // if there is an error retrieving, send the error.
-                if (err)
-                    res.send(err);
-
-                res.json(courses); // return all courses in JSON format
-            });
-
-        });
-
-
-
-    };
+};
 

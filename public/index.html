@@ -9,10 +9,9 @@
 
     <title>Learner Codes :: Learn How to Code</title>
 
-    <!-- CSS -->
-    <!--<link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">-->
+
     <link rel="stylesheet" href="vendor/angular-material/angular-material.css">
-    <link rel="stylesheet" href="css/style.css"> <!-- custom styles -->
+    <link rel="stylesheet" href="css/style.css">
 
     <!-- JS -->
     <script src="vendor/angular/angular.min.js"></script>
@@ -21,11 +20,16 @@
     <!-- ANGULAR CUSTOM -->
     <script src="js/app.js"></script>
     <script src="js/routes.js"></script>
-    <script src="js/controllers/course.controller.js"></script>
-    <script src="js/controllers/user.controller.js"></script>
-    <script src="js/controllers/main.controller.js"></script>
+    <script src="js/controllers/course.client.controller.js"></script>
+    <script src="js/controllers/user.client.controller.js"></script>
+    <script src="js/controllers/main.client.controller.js"></script>
+    <script src="js/controllers/technology.client.controller.js"></script>
     <script src="js/services/user.service.js"></script>
     <script src="js/services/course.service.js"></script>
+    <script src="js/services/technology.service.js"></script>
+    <script src="js/services/instructor.service.js"></script>
+    <script src="js/directives/directives.js"></script>
+    <script src="js/filters/filters.js"></script>
     <script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="vendor/angular-material/angular-material.min.js"></script>
     <script src="vendor/angular-animate/angular-animate.js"></script>
@@ -35,22 +39,28 @@
 <body>
 
 <header class="header" layout-wrap>
-    <md-toolbar layout="row" class="header">
-        <div class="md-toolbar-tools">
-          <h1><a class="" href="/">LEARNER CODES! </a></h1>
-        </div>
-        <div class="md-toolbar-tools" layout-align="end center">
-            <div flex="20"><span><a href="/courses">Courses</a></span></div>
-            <div flex="35"><span><a href="/sign_up">Create Free Account</a></span></div>
-            <div flex="15"><span><a href="/sign_in">Sign In</a></span></div>
-        </div>
-    </md-toolbar>
+  <md-toolbar layout="row" class="header">
+    <div class="md-toolbar-tools">
+      <h1><a class="" href="/">LEARNER CODES! </a></h1>
+    </div>
+
+    {{ loggedUser }}
+    <div class="md-toolbar-tools" layout-align="end center" ng-controller="UserController">
+        <div flex="20" ng-show="isAuthenticated()"><span><a href="/courses">Courses</a></span></div>
+        <div flex="35" ng-hide="isAuthenticated()"><span><a href="/sign_up">Create Free Account</a></span></div>
+        <div flex="15" ng-hide="isAuthenticated()"><span><a href="/sign_in">Sign In</a></span></div>
+        <div flex="35" ng-show="isAuthenticated()"><span>Hi, {{ currentUser.username }}</span></div>
+        <div flex="15" ng-show="isAuthenticated()"><span><a href="#" ng-click="signOut()">Sign Out</a></span></div>
+    </div>
+  </md-toolbar>
 </header>
 
 
 <div class="container">
     <!-- ANGULAR DYNAMIC CONTENT -->
-    <div ng-view></div>
+    <div ng-view>
+
+    </div>
 </div>
 
 <footer>

@@ -1,0 +1,8 @@
+<div class="md-toolbar-tools" layout-align="end center" ng-controller="UserController">
+
+    <div flex="20"><span><a href="/courses">Courses</a></span></div>
+    <div flex="35"><span><a href="/sign_up">Create Free Account</a></span></div>
+    <div flex="15" ng-hide="identity.isAuthenticated()"><span><a href="/sign_in">Sign In</a></span></div>
+    <div flex="15" ng-show="identity.isAuthenticated()"><span><a href="/sign_in">Sign Out</a></span></div>
+    <div flex="15" ><span> -- {{ identity.isAuthenticated() }}</span></div>
+</div>

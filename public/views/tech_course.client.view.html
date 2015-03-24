@@ -1,0 +1,44 @@
+<md-content class="first-content" style="padding: 24px;">
+
+  <div layout="row" layout-align="center center" class="skill_caption">
+      <h3> {{ techDetails.name }} Lessons </h3>
+  </div>
+
+  <div layout="row" layout-align="center center" class="skill_caption">
+      <h3>
+          {{ techDetails.description }}
+      </h3>
+  </div>
+
+
+  <div layout="row" layout-align="center center" class="browse_caption">
+      <span> Browse all {{ techDetails[0].name }} Lessons </span>
+  </div>
+
+
+  <div id="demo">
+    <div class="table-responsive-vertical shadow-z-1">
+      <table id="table" class="table table-hover table-mc-light-blue">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Duration</th>
+              <th>Technology</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="course in techcourseDetails">
+
+                <td data-title="ID"><a ng-href="/technologies/{{ techDetails.technology_slug }}"><img ng-src="{{ techDetails.technology_avatar }}" width="30" height="30" /></a></td>
+                <td data-title="Name"><a ng-href="/courses/{{ course.course_slug }}">{{ course.name }} </a></td>
+                <td data-title="Link">{{ course.course_duration }}</td>
+                <td data-title="Status">{{ techDetails.name }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+</md-content>

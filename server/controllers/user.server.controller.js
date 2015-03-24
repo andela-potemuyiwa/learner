@@ -1,100 +1,119 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var passport = require('passport');
 var UserModel = require('../models/user.model');
 
 module.exports = {
 
-        root: function( request, response){
-            response.send("WELCOME TO TRAINERS API BASE");
-        },
+    root: function( request, response){
+      response.send("WELCOME TO LEANER CODES BASE API");
+    },
 
-        apiRoot: function (request, response) {
-            response.send('Welcome to Our Dance Api...Don\'t Get It Twisted');
-        },
+    apiRoot: function (request, response) {
+      response.send('Welcome to Our Learner Api...Don\'t Get It Twisted');
+    },
 
-        listUsers: function (request, response, next) {
-            UserModel.find(function (err, users) {
-                if (err) {
-                    response.json(err);
-                }
+    listUsers: function (request, response, next) {
+      UserModel.find(function (err, users) {
+          if (err) {
+              response.json(err);
+          }
 
-                response.json(users);
-            });
-        },
+          response.json(users);
+      });
+  },
 
-        getUser: function (request, response, next) {
+    getUser: function (request, response, next) {
 
-            var danceName = request.params.name.toLowerCase();
+      var danceName = request.params.name.toLowerCase();
 
-            UserModel.find({name: username}, function (err, dance) {
-              if (err) {
-                response.status(404).json('Not Found');
+      UserModel.find({name: username}, function (err, dance) {
+        if (err) {
+          response.status(404).json('Not Found');
+        }
+
+        response.json(dance);
+      });
+
+    },
+
+    authUser: function( req, res, next){
+
+      var auth = passport.authenticate('local', function( err, user){
+          if(err){
+              return next(err);
+          }
+          if(!user){
+              res.json({ success: false });
+          }
+
+          req.logIn( user, function(err){
+              if( err)
+              {
+                  return next( err );
               }
 
-              response.json(dance);
-            });
-        },
+              res.json({
+                  success: true,
+                  user: user
+              });
+          });
 
-        checkIfUserExists: function( request, response, next ){
+      });
 
-            email = request.body[0].email.toLowerCase();
+      auth( req, res, next );
 
-            UserModel.find({ email: email }).exec(function(err, data){
-                    if (err) {
-                        response.json(err);
-                    }
+    },
 
-                    response.json({
-                        message: 'You have been registered already with that email',
-                    });
-            });
+    logOutUser: function( req, res ){
+        req.logout();
+        res.end();
+    },
 
-        },
+    addUser: function (request, response, next) {
 
-        addUser: function (request, response, next) {
+      UserModel.create(request.body, function (err, user) {
 
-            UserModel.create(request.body, function (err, user) {
+          if (err) {
+              response.json(err);
+          }
 
+          response.json({
+              message: 'User ' + request.body.username + ' was added to the list of users.',
+          });
 
-                if (err) {
-                    response.json(err);
-                }
+          next();
+      });
+    },
 
-                response.json({
-                    message: 'User ' + request.body.username + ' was added to the list of users.',
-                });
+    editUser: function (request, response) {
+      var danceName = request.params.name.toLowerCase();
+      var dance = request.body;
 
-                next();
-            });
-        },
+      DanceModel.update({name: danceName}, dance, function (err) {
+          if (err) {
+              response.status(404).json('Not Found');
+          }
 
-        editUser: function (request, response) {
-            var danceName = request.params.name.toLowerCase();
-            var dance = request.body;
+          response.status(200).json('Update Successful');
 
-            DanceModel.update({name: danceName}, dance, function (err) {
-                if (err) {
-                    response.status(404).json('Not Found');
-                }
+      });
+    },
 
-                response.status(200).json('Update Successful');
+    removeUser: function (request, response) {
+      var danceName = request.params.name.toLowerCase();
 
-            });
-        },
+      DanceModel.remove({name: danceName}, function (err, dance) {
 
-        removeUser: function (request, response) {
-            var danceName = request.params.name.toLowerCase();
+          if (err) {
+              response.status(404).json('Not Found');
+          }
 
-            DanceModel.remove({name: danceName}, function (err, dance) {
+          response.json('Delete Successful');
+      });
+    }
 
-                if (err) {
-                    response.status(404).json('Not Found');
-                }
-
-                response.json('Delete Successful');
-            });
-        }
-    };
+};
 
 
