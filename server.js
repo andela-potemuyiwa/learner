@@ -21,7 +21,7 @@ if( env === 'development'){
   //connect to  development db
   mongoose.connect( db.url );
 }
-else if( env === 'production'){
+else{
   //connect to production db
   mongoose.connect( production.url );
 }

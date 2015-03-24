@@ -1,3 +1,3 @@
 module.exports = {
-  url : 'mongodb://unicodeveloper:pote1142@ds031661.mongolab.com:31661/learner'
+  url : 'mongodb://unicodeveloper:pote1142@ds055680.mongolab.com:55680/learner'
 }
