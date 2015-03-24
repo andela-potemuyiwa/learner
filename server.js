@@ -15,6 +15,8 @@ var  express       = require('express'),
 // set default environment to development
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
+var port = process.env.PORT || 3030;
+
 if( env === 'development'){
   //connect to  development db
   mongoose.connect( db.url );
@@ -111,7 +113,6 @@ app.get('*', function(req, res) {
 
 
 // listening and serving application on this port
-var port = 3030;
 app.listen( port, function(){
   console.log("Listening on port ", port );
 });
