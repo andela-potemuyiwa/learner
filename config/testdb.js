@@ -27,7 +27,6 @@ User.find({}).exec( function(err, doc){
     hash = hashPwd( salt, 'unicodeveloper');
     User.create({ username: 'prosper',email: 'otemuyiwa@gmail.com', salt: salt, h_password: hash, user_avatar: ""});
   }
-
 });
 
 

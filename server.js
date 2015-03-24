@@ -21,7 +21,7 @@ if( env === 'development'){
   //connect to  development db
   mongoose.connect( db.url );
 }
-else{
+else if( env === 'production'){
   //connect to production db
   mongoose.connect( production.url );
 }
@@ -36,8 +36,6 @@ require('./server/models/course.model');
 require('./server/models/instructor.model');
 require('./server/models/technology.model');
 var user = require('./server/models/user.model');
-
-
 
 
 
