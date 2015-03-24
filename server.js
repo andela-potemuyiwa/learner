@@ -4,6 +4,7 @@ var  express       = require('express'),
      mongoose      = require('mongoose'),
      cor           = require('cors'),
      db            = require('./config/db'),
+     production    = require('./config/production'),
      testdb        = require('./config/testdb'),
      route         = require('./server/routes'),
      passport      = require('passport'),
@@ -11,8 +12,19 @@ var  express       = require('express'),
      cookieParser  = require('cookie-parser'),
      session       = require('express-session');
 
-//connect to db
-mongoose.connect( db.url );
+// set default environment to development
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+if( env === 'development'){
+  //connect to  development db
+  mongoose.connect( db.url );
+}
+else{
+  //connect to production db
+  mongoose.connect( production.url );
+}
+
+
 
 //test db if it has been connected
 testdb.dbconnect();
@@ -23,8 +35,9 @@ require('./server/models/instructor.model');
 require('./server/models/technology.model');
 var user = require('./server/models/user.model');
 
-// set default environment to development
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+
+
 
 var app = express();
 
