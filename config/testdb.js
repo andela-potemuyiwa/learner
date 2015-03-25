@@ -14,23 +14,22 @@ module.exports = {
   }
 };
 
-// function createSalt(){
-//   return crypto.randomBytes(128).toString('base64');
-// }
+function createSalt(){
+  return crypto.randomBytes(128).toString('base64');
+}
 
-// User.find({}).exec( function(err, doc){
-//   if( doc.length === 0 ){
-//     var salt, hash;
-//     salt = createSalt();
-//     hash = hashPwd( salt, 'unicodeveloper');
-//     User.create({ username: 'unicodeveloper',email: 'prosperotemuyiwa@gmail.com', salt: salt, h_password: hash, user_avatar: ""});
-//     salt = createSalt();
-//     hash = hashPwd( salt, 'unicodeveloper');
-//     User.create({ username: 'busayo',email: 'potemuyiwa@gmail.com', salt: salt, h_password: hash, user_avatar: ""});
-//     salt = createSalt();
-//     hash = hashPwd( salt, 'unicodeveloper');
-//     User.create({ username: 'prosper',email: 'otemuyiwa@gmail.com', salt: salt, h_password: hash, user_avatar: ""});
-//   }
-// });
-
+User.find({}).exec( function(err, doc){
+  if( doc.length === 0 ){
+    var salt, hash;
+    salt = createSalt();
+    hash = hashPwd( salt, 'unicodeveloper');
+    User.create({ username: 'unicodeveloper',email: 'prosperotemuyiwa@gmail.com', salt: salt, h_password: hash, user_avatar: ""});
+    salt = createSalt();
+    hash = hashPwd( salt, 'unicodeveloper');
+    User.create({ username: 'busayo',email: 'potemuyiwa@gmail.com', salt: salt, h_password: hash, user_avatar: ""});
+    salt = createSalt();
+    hash = hashPwd( salt, 'unicodeveloper');
+    User.create({ username: 'prosper',email: 'otemuyiwa@gmail.com', salt: salt, h_password: hash, user_avatar: ""});
+  }
+});
 
