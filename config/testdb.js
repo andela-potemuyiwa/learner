@@ -14,6 +14,10 @@ module.exports = {
   }
 };
 
+function createSalt(){
+  return crypto.randomBytes(128).toString('base64');
+}
+
 User.find({}).exec( function(err, doc){
   if( doc.length === 0 ){
     var salt, hash;
