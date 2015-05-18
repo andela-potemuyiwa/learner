@@ -1,5 +1,3 @@
-var app = angular.module('appDirective', []);
-
 app.directive('mdColresize', ['$timeout', function ( $timeout) {
   return {
     restrict: 'A',

@@ -5,109 +5,108 @@ var InstructorModel = require('../models/instructor.model');
 
 module.exports = {
 
-        listInstructors: function (request, response, next) {
+  listInstructors: function (request, response, next) {
 
-            InstructorModel.find().exec( function(err, data){
-                if (err) {
-                    response.json(err);
-                }
+    InstructorModel.find().exec( function(err, data){
+      if (err) {
+          response.json(err);
+      }
 
-                response.json( data );
+      response.json( data );
 
-                next();
-            });
-        },
+      next();
+    });
+  },
 
-        getEachInstructor: function (request, response, next) {
+  getEachInstructor: function (request, response, next) {
 
-            var twitterHandle = request.params.twitter_handle.toLowerCase();
+    var twitterHandle = request.params.twitter_handle.toLowerCase();
 
-            InstructorModel.find({ twitter_handle: twitterHandle }).populate('courses').exec( function (err, instructor ) {
+    InstructorModel.find({ twitter_handle: twitterHandle }).populate('courses').exec( function (err, instructor ) {
 
-              if (err) {
-                response.status(404).json('Not Found');
-              }
+      if (err) {
+        response.status(404).json('Not Found');
+      }
 
-              response.json( instructor );
+      response.json( instructor );
 
-              next();
-            });
-        },
+      next();
+    });
+  },
 
-        getInstructorById: function (request, response) {
+  getInstructorById: function (request, response) {
 
-            var id = request.params.id.toLowerCase();
+    var id = request.params.id.toLowerCase();
 
-            InstructorModel.find({ _id: id }).populate('courses').exec( function (err, instructor ) {
+    InstructorModel.find({ _id: id }).populate('courses').exec( function (err, instructor ) {
 
-              if (err) {
-                response.status(404).json('Not Found');
-              }
+      if (err) {
+        response.status(404).json('Not Found');
+      }
 
-              response.json( instructor );
-
-
-            });
-        },
-
-        getEachInstructorCourses: function (request, response ) {
-
-            var twitterHandle = request.params.twitter_handle.toLowerCase();
-
-            InstructorModel.find({ twitter_handle: twitterHandle }).populate('courses').exec( function (err, instructor ) {
-
-              if (err) {
-                response.status(404).json('Not Found');
-              }
-
-              response.json( instructor[0].courses );
-
-            });
-        },
-
-        addInstructor: function (request, response, next) {
-
-            CourseModel.create(request.body, function (err, user) {
+      response.json( instructor );
 
 
-                if (err) {
-                    response.json(err);
-                }
+    });
+  },
 
-                response.json({
-                    message: 'Course:  ' + request.body.name + ' was successfully added to the list of courses.',
-                });
+  getEachInstructorCourses: function (request, response ) {
 
-                next();
-            });
-        },
+    var twitterHandle = request.params.twitter_handle.toLowerCase();
 
-        editInstructorDetails: function (request, response) {
-            var courseName = request.params.name.toLowerCase();
-            var course = request.body;
+    InstructorModel.find({ twitter_handle: twitterHandle }).populate('courses').exec( function (err, instructor ) {
 
-            CourseModel.update({name: courseName}, course, function (err) {
-                if (err) {
-                    response.status(404).json('Not Found');
-                }
+      if (err) {
+        response.status(404).json('Not Found');
+      }
 
-                response.status(200).json('Update Successful');
+      response.json( instructor[0].courses );
 
-            });
-        },
+    });
+  },
 
-        removeInstructor: function (request, response) {
-            var courseName = request.params.name.toLowerCase();
+  addInstructor: function (request, response, next) {
 
-            CourseModel.remove({name: courseName}, function (err, dance) {
+    CourseModel.create(request.body, function (err, user) {
 
-                if (err) {
-                    response.status(404).json('Not Found');
-                }
-
-                response.json('Delete Successful');
-            });
+        if (err) {
+            response.json(err);
         }
-    };
+
+        response.json({
+            message: 'Course:  ' + request.body.name + ' was successfully added to the list of courses.',
+        });
+
+        next();
+    });
+  },
+
+  editInstructorDetails: function (request, response) {
+    var courseName = request.params.name.toLowerCase();
+    var course = request.body;
+
+    CourseModel.update({name: courseName}, course, function (err) {
+        if (err) {
+            response.status(404).json('Not Found');
+        }
+
+        response.status(200).json('Update Successful');
+
+    });
+  },
+
+  removeInstructor: function (request, response) {
+    var courseName = request.params.name.toLowerCase();
+
+    CourseModel.remove({name: courseName}, function (err, dance) {
+
+        if (err) {
+            response.status(404).json('Not Found');
+        }
+
+        response.json('Delete Successful');
+    });
+  }
+};
 
 

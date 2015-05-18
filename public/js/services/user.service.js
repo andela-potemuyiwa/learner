@@ -1,23 +1,18 @@
-var app = angular.module('UserService', []);
-
 app.factory('User', ['$http','$q', '$window', function($http, $q, $window ) {
-
   return {
     // call to get all users
-    get : function() {
+    get: function() {
       return $http.get('/api/users');
     },
-
     // call to POST and create a new user
-    create : function(userData) {
+    create: function(userData) {
       return $http.post('/api/users', userData);
     },
-
     // call to DELETE a user
-    delete : function(id) {
+    delete: function(id) {
       return $http.delete('/api/users/' + id);
     },
-
+    // call to authenticate a user
     authenticateUser: function(username, password, cb) {
       $http.post('/login', { username: username, password: password }).then(function( response ){
         if(response.data.success){
@@ -28,12 +23,11 @@ app.factory('User', ['$http','$q', '$window', function($http, $q, $window ) {
         }
       });
     },
-
+    // call to log out a user
     logOutUser: function( cb ){
       $http.post('/logout', { logout: true }).then(function(){
           cb(true, undefined );
       });
     }
   }
-
 }]);
