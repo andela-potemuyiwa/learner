@@ -51,11 +51,12 @@ app.use(session({ secret: 'learner codes unicodeveloper', resave: true,
     saveUninitialized: true }));
 
 //initialize passport middleware
-app.use( passport.initialize());
+app.use(passport.initialize());
 
 // Tell passport to use sessions
-app.use( passport.session());
+app.use(passport.session());
 
+// Tell prerender.io to serve your cached pages to improve SEO
 app.use(prerender.set('prerenderToken', production.prerenderToken))
 
 // use to serve static files like favicon, css, angular and the rest
@@ -74,7 +75,7 @@ passport.use( new LocalStrategy(
 ));
 
 passport.serializeUser(function(user,done){
-  if(user){a
+  if(user){
     done(null, user._id);
   }
 });
