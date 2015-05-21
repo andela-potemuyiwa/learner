@@ -1,10 +1,10 @@
+require('dotenv').load();
 var  express       = require('express'),
      logger        = require('morgan'),
      bodyParser    = require('body-parser'),
      mongoose      = require('mongoose'),
      cor           = require('cors'),
-     db            = require('./config/db'),
-     production    = require('./config/production'),
+     secrets       = require('./config/secrets'),
      testdb        = require('./config/testdb'),
      route         = require('./server/routes'),
      passport      = require('passport'),
@@ -13,54 +13,46 @@ var  express       = require('express'),
      session       = require('express-session'),
      prerender     = require('prerender-node');
 
-// set default environment to development
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+/**
+ *  Set default environment to development
+ */
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var port = process.env.PORT || 3030;
 
-if( env === 'development'){
-  //connect to  development db
-  mongoose.connect(db.url);
-}
-else{
-  //connect to production db
-  mongoose.connect(production.url);
-}
-
-//test db if it has been connected
+/**
+ * Connect to MongoDB.
+ */
 testdb.dbconnect();
 
-//require all the models
+/**
+ * Require all the models
+ */
 require('./server/models/course.model');
 require('./server/models/instructor.model');
 require('./server/models/technology.model');
 var user = require('./server/models/user.model');
 
+/**
+ * Create Express server.
+ */
 var app = express();
 
-// use express logger which is morgan!
+/**
+ * Express configuration.
+ */
 app.use(logger('dev'));
-
-
 app.use(cookieParser());
-
-// use bodyParser for request and parsing info
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true})); //use bodyParser for request and parsing info
 app.use(bodyParser.json());
-app.use(session({ secret: 'learner codes unicodeveloper', resave: true,
-    saveUninitialized: true }));
-
-//initialize passport middleware
-app.use(passport.initialize());
-
-// Tell passport to use sessions
-app.use(passport.session());
-
-// Tell prerender.io to serve your cached pages to improve SEO
-app.use(prerender.set('prerenderToken', production.prerenderToken))
-
-// use to serve static files like favicon, css, angular and the rest
-app.use( express.static( __dirname + '/public'));
+app.use(session({
+  secret: secrets.sessionSecret,
+  resave: true,
+  saveUninitialized: true }));
+app.use(passport.initialize()); //initialize passport middleware
+app.use(passport.session()); //Tell passport to use sessions
+app.use(prerender.set('prerenderToken', secrets.prerenderToken)) //Tell prerender.io to serve your cached pages to improve SEO
+app.use( express.static( __dirname + '/public')); //use to serve static files like favicon, css, angular and the rest
 
 passport.use( new LocalStrategy(
     function( username, password, done){
@@ -90,12 +82,15 @@ passport.deserializeUser(function(id, done){
   });
 });
 
+
 app.use(function(req, res, next){
   console.log( req.user );
   next();
 });
 
-// configure our routes
+/**
+ * Routes Configuration
+ */
 route(app);
 
 //configure any route whatsoever to redirect to angular
@@ -103,12 +98,13 @@ app.get('*', function(req, res) {
     /** frontend routes =========================================================
       * route to handle all angular requests
       * load the single view file (angular will handle the page changes on the front-end)
-      * res.sendFile('./public/index.html');
       **/
      res.sendFile(__dirname + '/public/index.html' );
 });
 
-//listening and serving application on this port
+/**
+ * Start Express server.
+ */
 app.listen( port, function(){
-  console.log("Listening on port ", port );
+  console.log("learner Server Listening on port ", port );
 });

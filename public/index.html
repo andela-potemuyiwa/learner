@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Learner.codes, Learner, Codes, AngularJS, MongoDB, Python, laravel, Code Screencasts, Learn How to code">
+  <meta name="description" content="Learner.codes, Learner, Codes, AngularJS, MongoDB, Python, laravel, Code Screencasts, Learn How to code, Code Today, Code Tutorials, Teach Yourself How To Code">
   <meta name="fragment" content="!">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
   <base href="/">
@@ -48,6 +48,8 @@
     {{ loggedUser }}
     <div class="md-toolbar-tools" layout-align="end center" ng-controller="UserController">
         <div flex="20" ng-show="isAuthenticated()"><span><a href="/courses">Courses</a></span></div>
+        <div flex="20" ng-show="isAuthenticated()"><span><a href="/challenges">Code Kata</a></span></div>
+        <div flex="20" ng-show="isAuthenticated()"><span><a href="/news">News</a></span></div>
         <div flex="35" ng-hide="isAuthenticated()"><span><a href="/sign_up">Create Free Account</a></span></div>
         <div flex="15" ng-hide="isAuthenticated()"><span><a href="/sign_in">Sign In</a></span></div>
         <div flex="35" ng-show="isAuthenticated()"><span>Hi, {{ currentUser.username }}</span></div>
@@ -60,7 +62,6 @@
 <div class="container">
     <!-- ANGULAR DYNAMIC CONTENT -->
     <div ng-view>
-
     </div>
 </div>
 
