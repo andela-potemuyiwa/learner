@@ -3,7 +3,7 @@ var  express       = require('express'),
      logger        = require('morgan'),
      bodyParser    = require('body-parser'),
      mongoose      = require('mongoose'),
-     cor           = require('cors'),
+     cors           = require('cors'),
      secrets       = require('./config/secrets'),
      testdb        = require('./config/testdb'),
      route         = require('./server/routes'),
@@ -17,6 +17,11 @@ var  express       = require('express'),
  *  Set default environment to development
  */
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+/*
+ *  Set local mongodb environment
+ */
+process.env.MONGODB  = 'mongodb://localhost/learner';
 
 var port = process.env.PORT || 3030;
 
@@ -41,6 +46,7 @@ var app = express();
 /**
  * Express configuration.
  */
+app.use(cors()); // Allow cross origin requests
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true})); //use bodyParser for request and parsing info
@@ -52,7 +58,7 @@ app.use(session({
 app.use(passport.initialize()); //initialize passport middleware
 app.use(passport.session()); //Tell passport to use sessions
 app.use(prerender.set('prerenderToken', secrets.prerenderToken)) //Tell prerender.io to serve your cached pages to improve SEO
-app.use( express.static( __dirname + '/public')); //use to serve static files like favicon, css, angular and the rest
+app.use(express.static( __dirname + '/public')); //use to serve static files like favicon, css, angular and the rest
 
 passport.use( new LocalStrategy(
     function( username, password, done){

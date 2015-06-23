@@ -1,6 +1,5 @@
 'use strict';
 
-var mongoose = require('mongoose');
 var InstructorModel = require('../models/instructor.model');
 
 module.exports = {

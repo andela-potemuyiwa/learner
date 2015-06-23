@@ -5,7 +5,8 @@ var instructorSchema =  mongoose.Schema({
     twitter_handle:           { type: String, required: true },
     instructor_avatar:        { type: String, required: true },
     courses:                  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
-    registered_on:            { type: Date, default: Date.now }
+    registered_on:            { type: Date, default: Date.now },
+    user:                     { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('Instructor', instructorSchema, 'instructors');

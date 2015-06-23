@@ -13,8 +13,8 @@ module.exports = function(app) {
   app.post('/login', User.authUser);
   app.post('/logout', User.logOutUser);
 
-  app.get('/news', News.getNews);
-  app.get('/challenges', Challenge.getChallenges);
+  // app.get('/news', News.getNews);
+  // app.get('/challenges', Challenge.getChallenge);
 
   app.get('/api/courses',  Course.listCourses);
   app.get('/api/courses/:course_slug',  Course.getCourse);

@@ -1,5 +1,5 @@
 var mongoose   = require('mongoose'),
-    secrets         = require('./secrets'),
+    secrets    = require('./secrets'),
     crypto     = require('crypto'),
     User       = require('../server/models/user.model');
 
